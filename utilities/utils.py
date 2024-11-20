@@ -39,35 +39,6 @@ def calc_vif(df: pd.DataFrame) -> pd.DataFrame:
     return vif
 
 
-def highlight_p_values(row: pd.Series) -> list:
-    """
-    Highlight p-values below a significance level of 0.05.
-
-    Parameters:
-    row (pd.Series): A row of p-values.
-
-    Returns:
-    list: A list of styles for each cell in the row.
-    """
-    return ["background-color: black" if value <= 0.05 else "" for value in row]
-
-
-def calc_p_values(X: pd.DataFrame, y: pd.Series) -> tuple:
-    """
-    Calculate p-values for each feature using OLS regression.
-
-    Parameters:
-    X (pd.DataFrame): The input DataFrame with features.
-    y (pd.Series): The target variable.
-
-    Returns:
-    tuple: A DataFrame containing p-values for each feature and the OLS model.
-    """
-    ols_model = sm.OLS(y, X).fit()
-    p_values_df = ols_model.pvalues.sort_values().to_frame(name="p_value")
-    return p_values_df, ols_model
-
-
 def calc_correlation(df: pd.DataFrame, threshold: float = None):
     """
     Calculate the correlation matrix, optionally filter rows and columns based on a positive correlation threshold,
